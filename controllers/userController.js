@@ -1,6 +1,7 @@
 const { model } = require("mongoose");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 
 const securePassword = async (password) => {
   try {
@@ -11,6 +12,40 @@ const securePassword = async (password) => {
   }
 };
 
+const sendVerifyMail = async (name, email, user_id) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    const mailOptions = {
+      from: "22l025@gecskp.ac.in",
+      to: email,
+      subject: "For Verification mail",
+      html:
+        "<p>Hii " +
+        name +
+        ', please click here to <a href="http://127.0.0.1:3000/verify?id=' +
+        user_id +
+        '">Verify</a> your mail.</p>',
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email has been send:- ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 const loadRegister = async (req, res) => {
   try {
     res.render("registration");
@@ -33,6 +68,7 @@ const insertUser = async (req, res) => {
 
     const userData = await user.save();
     if (userData) {
+      sendVerifyMail(req.body.name, req.body.email, userData._id);
       res.render("registration", {
         message:
           "Your registration has been successed, Please verify your mail",
@@ -47,7 +83,21 @@ const insertUser = async (req, res) => {
   }
 };
 
+const verifyMail = async (req, res) => {
+  try {
+    const updateInfo = await User.updateOne(
+      { _id: req.query.id },
+      { $set: { is_verified: 1 } }
+    );
+    console.log(updateInfo);
+    res.render("email-verified");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   loadRegister,
   insertUser,
+  verifyMail,
 };

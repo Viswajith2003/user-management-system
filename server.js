@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+require("dotenv").config();
 
 // Set EJS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 const userRoute = require("./routes/userRoutes");
-app.use('/', userRoute);
+app.use("/", userRoute);
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://127.0.0.1:27017/user_management_system");
