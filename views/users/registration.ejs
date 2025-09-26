@@ -9,4 +9,13 @@
         <input type="password" name="password" placeholder="Enter Password" required><br><br>
         <input type="submit" value="Register">
     </form>
- <%- include('../layouts/footer.ejs') %>
+
+<%
+    if(typeof message !=='undefined'){ 
+        %>
+        <p style="color:green;"><%= message %></p>
+        <% 
+    } 
+%>
+
+ <% include('../layouts/footer.ejs') %>
