@@ -1,5 +1,5 @@
 const { model } = require("mongoose");
-const user = require("../models/userModel");
+const User = require("../models/userModel");
 
 const loadRegister = async (req, res) => {
   try {
@@ -10,5 +10,5 @@ const loadRegister = async (req, res) => {
 };
 
 module.exports = {
-  loadRegister,
+  loadRegister
 };
