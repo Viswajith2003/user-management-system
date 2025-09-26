@@ -1,6 +1,12 @@
 const express = require("express");
 const user_route = express();
 
+const config = require("../config/config");
+const session = require("express-session");
+user_route.use(session({ secret: config.sessionSecret }));
+
+const auth = require("../middleware/auth");
+
 user_route.set("view engine", "ejs");
 user_route.set("views", "./views/users");
 
@@ -25,17 +31,17 @@ const upload = multer({ storage: storage });
 
 const userController = require("../controllers/userController");
 
-user_route.get("/register", userController.loadRegister);
+user_route.get("/register", auth.isLogout, userController.loadRegister);
 
 user_route.post("/register", upload.single("image"), userController.insertUser);
 
 user_route.get("/verify", userController.verifyMail);
 
-user_route.get("/", userController.loginLoad);
-user_route.get("/login", userController.loginLoad);
+user_route.get("/", auth.isLogout, userController.loginLoad);
+user_route.get("/login", auth.isLogout, userController.loginLoad);
 
 user_route.post("/login", userController.verifiyLogin);
 
-user_route.get("/home", userController.loadHome);
+user_route.get("/home", auth.isLogin, userController.loadHome);
 
 module.exports = user_route;

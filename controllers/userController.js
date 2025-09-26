@@ -121,6 +121,7 @@ const verifiyLogin = async (req, res) => {
         if (userData.is_verified === 0) {
           res.render("login", { message: "Please verify your mail" });
         } else {
+          req.session.user_id=userData._id;
           res.redirect("/home");
         }
       } else {
@@ -134,13 +135,13 @@ const verifiyLogin = async (req, res) => {
   }
 };
 
-const loadHome=async(req,res)=>{
+const loadHome = async (req, res) => {
   try {
-    res.render('home')
+    res.render("home");
   } catch (error) {
-      console.log(error.message);
+    console.log(error.message);
   }
-}
+};
 
 module.exports = {
   loadRegister,
