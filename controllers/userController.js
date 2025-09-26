@@ -31,7 +31,7 @@ const sendVerifyMail = async (name, email, user_id) => {
       html:
         "<p>Hii " +
         name +
-        ', please click here to <a href="http://127.0.0.1:3000/verify?id=' +
+        ', please click here to <a href="http://127.0.0.1:3005/verify?id=' +
         user_id +
         '">Verify</a> your mail.</p>',
     };
@@ -90,9 +90,14 @@ const verifyMail = async (req, res) => {
       { $set: { is_verified: 1 } }
     );
     console.log(updateInfo);
-    res.render("email-verified");
+    res.render("email-verified", {
+      message: "Your email has been successfully verified 🎉",
+    });
   } catch (error) {
     console.log(error.message);
+    res.render("email-verified", {
+      message: "Email verification failed ❌, please try again.",
+    });
   }
 };
 
