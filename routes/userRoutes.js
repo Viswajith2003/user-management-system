@@ -70,3 +70,4 @@ user_route.get("/edit", auth.isLogin, userController.editLoad);
 user_route.post("/edit", upload.single("image"), userController.updateProfile);
 
 module.exports = user_route;
+
