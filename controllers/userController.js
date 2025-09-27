@@ -2,6 +2,7 @@ const { model } = require("mongoose");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const randomstring = require("randomstring");
 
 const securePassword = async (password) => {
   try {
@@ -46,6 +47,41 @@ const sendVerifyMail = async (name, email, user_id) => {
     console.log(error.message);
   }
 };
+const sendResetPasswordMail = async (name, email, token) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "For Reset Password",
+      html:
+        "<p>Hii " +
+        name +
+        ', please click here to <a href="http://127.0.0.1:3005/forget-password?token=' +
+        token +
+        '">Reset</a> your password.</p>',
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email has been send:- ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const loadRegister = async (req, res) => {
   try {
     res.render("registration");
@@ -121,7 +157,7 @@ const verifiyLogin = async (req, res) => {
         if (userData.is_verified === 0) {
           res.render("login", { message: "Please verify your mail" });
         } else {
-          req.session.user_id=userData._id;
+          req.session.user_id = userData._id;
           res.redirect("/home");
         }
       } else {
@@ -143,6 +179,96 @@ const loadHome = async (req, res) => {
   }
 };
 
+const loadForgot = async (req, res) => {
+  try {
+    res.render("forget");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const verifyForgot = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const userData = await User.findOne({ email: email });
+    if (userData) {
+      if (userData.is_verified === 0) {
+        res.render("forget", { message: "Please verify your mail." });
+      } else {
+        const randomString = randomstring.generate();
+        const updatedData = await User.updateOne(
+          { email: email },
+          { $set: { token: randomString } }
+        );
+        sendResetPasswordMail(userData.name, userData.email, randomString);
+        res.render("forget", {
+          message: "Please check your mail to reset your password",
+        });
+      }
+    } else {
+      res.render("forget", { message: "User email is incorrect." });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const forgetPasswordLoad = async (req, res) => {
+  try {
+    const token = req.query.token;
+    const tokenData = await User.findOne({ token: token });
+
+    if (tokenData) {
+      res.render("forget-password", { user_id: tokenData._id });
+    } else {
+      res.render("404", { message: "Token is invalid" });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const resetPass = async (req, res) => {
+  try {
+    const password = req.body.password;
+    const user_id = req.body.user_id;
+    const secure_password = await securePassword(password);
+
+    const updatedData = await User.findByIdAndUpdate(
+      { _id: user_id },
+      { $set: { password: secure_password, token: "" } }
+    );
+
+    res.redirect("/");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const verficationLoad = async (req, res) => {
+  try {
+    res.render("verification");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const sendVerificationlink = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const userData = await User.findOne({ email: email });
+    if (userData) {
+      sendVerifyMail(userData.name, userData.email, userData._id);
+      res.render("verification", {
+        message: "verification link has send to your mail id, please check.",
+      });
+    } else {
+      res.render("verification", { message: "This email is not registered." });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   loadRegister,
   insertUser,
@@ -150,4 +276,11 @@ module.exports = {
   loginLoad,
   verifiyLogin,
   loadHome,
+  loadForgot,
+  verifyForgot,
+  sendResetPasswordMail,
+  forgetPasswordLoad,
+  resetPass,
+  verficationLoad,
+  sendVerificationlink,
 };

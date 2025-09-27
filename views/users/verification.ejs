@@ -1,0 +1,18 @@
+<% include('../layouts/header.ejs') %>
+    <h1>Verification</h1>
+
+    <% if(typeof message !=='undefined' ){ %>
+        <h3>
+            <%=message %>
+        </h3>
+        <% } %>
+
+            <form action="/forget" method="post">
+                <input type="email" name="email" placeholder="Enter email" required>
+                <br><br>
+
+                <input type="submit" value="Send Verification Link">
+            </form>
+
+
+            <% include('../layouts/footer.ejs') %>

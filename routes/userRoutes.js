@@ -44,4 +44,23 @@ user_route.post("/login", userController.verifiyLogin);
 
 user_route.get("/home", auth.isLogin, userController.loadHome);
 
+// Forgot password page
+user_route.get("/forget", auth.isLogout, userController.loadForgot);
+
+// Send reset link
+user_route.post("/forget", userController.verifyForgot);
+
+// Reset password link from email
+user_route.get(
+  "/forget-password",
+  auth.isLogout,
+  userController.forgetPasswordLoad
+);
+
+// Submit new password
+user_route.post("/forget-password", userController.resetPass);
+
+user_route.get('/verification',userController.verficationLoad);
+user_route.post('/verification',userController.sendVerificationlink);
+
 module.exports = user_route;
