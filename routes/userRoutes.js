@@ -17,7 +17,7 @@ user_route.use(bodyParser.urlencoded({ extended: true }));
 const multer = require("multer");
 const path = require("path");
 
-user_route.use(express.static('public'))
+user_route.use(express.static("public"));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -62,7 +62,11 @@ user_route.get(
 // Submit new password
 user_route.post("/forget-password", userController.resetPass);
 
-user_route.get('/verification',userController.verficationLoad);
-user_route.post('/verification',userController.sendVerificationlink);
+user_route.get("/verification", userController.verficationLoad);
+user_route.post("/verification", userController.sendVerificationlink);
+
+user_route.get("/edit", auth.isLogin, userController.editLoad);
+
+user_route.post("/edit", upload.single("image"), userController.updateProfile);
 
 module.exports = user_route;
