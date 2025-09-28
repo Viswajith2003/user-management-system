@@ -3,7 +3,13 @@ const user_route = express();
 
 const config = require("../config/config");
 const session = require("express-session");
-user_route.use(session({ secret: config.sessionSecret }));
+user_route.use(
+  session({
+    secret: config.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 const auth = require("../middleware/auth");
 
@@ -70,4 +76,3 @@ user_route.get("/edit", auth.isLogin, userController.editLoad);
 user_route.post("/edit", upload.single("image"), userController.updateProfile);
 
 module.exports = user_route;
-

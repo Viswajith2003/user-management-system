@@ -1,0 +1,19 @@
+<% include('../layouts/header') %>
+    <h1>Admin Login</h1>
+
+    <% if(typeof message !=='undefined' ){ %>
+        <h3 style="color: red;">
+            <%=message %>
+        </h3>
+        <% } %>
+
+            <!-- Fixed: Changed action from "/login" to "/admin" -->
+            <form action="/admin" method="post">
+                <input type="email" name="email" placeholder="Enter email" required>
+                <br><br>
+                <input type="password" name="password" placeholder="Enter password" required>
+                <br><br>
+                <input type="submit" value="Login">
+            </form>
+
+            <% include('../layouts/footer') %>
