@@ -1,0 +1,24 @@
+<% include("../layouts/header.ejs")%>
+
+    <h1>My Profile</h1>
+
+    <table style="width: 50%;">
+        <tr>
+            <td><img src="/userImages/<%= admin.image %>" width="100px" height="150px"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <%= admin.email %>
+            </td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>
+                <%= admin.mobile %>
+            </td>
+        </tr>
+    </table>
+    <br><br>    
+    <a href="/admin/adminDash">Back to Home</a>
+    <% include("../layouts/footer.ejs")%>

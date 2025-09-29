@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
+const { use } = require("../routes/adminRoutes");
 
 const securePassword = async (password) => {
   try {
@@ -86,7 +87,8 @@ const verifyLogin = async (req, res) => {
 
 const loadDashboard = async (req, res) => {
   try {
-    res.render("adminDash");
+    const userData = await User.findById({ _id: req.session.user_id });
+    res.render("adminDash", { admin: userData });
   } catch (error) {
     console.log(error.message);
   }
@@ -166,6 +168,16 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const loadProfile = async (req, res) => {
+  try {
+    const userData = await User.findById({ _id: req.session.user_id });
+    res.render("profile", { admin: userData });
+  } catch (error) {
+    // res.status(404).render("404", { message: "Profile not loaded" });
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   loadLogin,
   verifyLogin,
@@ -176,4 +188,5 @@ module.exports = {
   sendResetPasswordMail,
   forgetPasswordLoad,
   resetPassword,
+  loadProfile,
 };

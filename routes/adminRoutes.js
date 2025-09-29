@@ -38,6 +38,8 @@ admin_route.get(
 );
 admin_route.post("/forget-password", adminController.resetPassword);
 
+admin_route.get("/profile",adminAuth.isLogin,adminController.loadProfile)
+
 // Catch-all route (404 handler or redirect)
 admin_route.use((req, res) => {
   res.redirect("/admin");

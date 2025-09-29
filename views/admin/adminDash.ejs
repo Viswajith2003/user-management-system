@@ -1,9 +1,12 @@
 <% include("../layouts/header.ejs")%>
     <h1>Admin Dashboard</h1>
-    <h2>Welcome, admin</h2>
+    <h2>Welcome, <%= admin.name%>
+    </h2>
+    <a href="/admin/profile">My Profile</a>
+    <br><br>
 
     <div>
-        <a href="/admin/logout">Logout</a>
+        <a href=" /admin/logout">Logout</a>
     </div>
 
     <!-- Add your admin functionality here -->
