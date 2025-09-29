@@ -180,6 +180,15 @@ const loadHome = async (req, res) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    req.session.destroy();
+    res.redirect("/login");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 const loadForgot = async (req, res) => {
   try {
     res.render("forget");
@@ -333,4 +342,5 @@ module.exports = {
   sendVerificationlink,
   editLoad,
   updateProfile,
+  logOut,
 };

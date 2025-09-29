@@ -52,6 +52,7 @@ user_route.post("/login", userController.verifiyLogin);
 
 user_route.get("/home", auth.isLogin, userController.loadHome);
 
+user_route.get("/logout",auth.isLogin,userController.logOut)
 // Forgot password page
 user_route.get("/forget", auth.isLogout, userController.loadForgot);
 
