@@ -1,14 +1,63 @@
 <% include("../layouts/header.ejs")%>
     <h1>Admin Dashboard</h1>
-    <h2>Welcome, <%= admin.name%>
-    </h2>
+
     <a href="/admin/profile">My Profile</a>
     <br><br>
 
+    <center>
+        <h2>Users Lists</h2>
+
+        <table width="50%">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Image</th>
+                <th>Verified</th>
+            </tr>
+
+            <% if(Users.length> 0){
+                for(let i=0;i<Users.length;i++) { %>
+                    <tr>
+                        <td>
+                            <%= Users[i].name%>
+                        </td>
+                        <td>
+                            <%= Users[i].email%>
+                        </td>
+                        <td>
+                            <%= Users[i].mobile%>
+                        </td>
+                        <td><img src="/userImages/<%= Users[i].image%>" alt="><%= Users[i].image%>" width="100px"
+                                height="100px"></td>
+                        <td>
+                            <%
+                                if(Users[i].is_verified === 0)
+                                {
+                                    %>
+                                        <p>Not Verified</p>
+                                    <%
+                                }else{
+                                    %>
+                                        <p>Verified</p>
+                                    <%
+                                }
+                            %>
+                        </td>
+                    </tr>
+                    <% } }else{ %>
+                        <tr>
+                            <td colspan="5">Users Not Found</td>
+                        </tr>
+                        <% } %>
+
+        </table>
+    </center>
+
+    <br><br>
     <div>
         <a href=" /admin/logout">Logout</a>
     </div>
 
-    <!-- Add your admin functionality here -->
 
     <% include("../layouts/footer.ejs")%>

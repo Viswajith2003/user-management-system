@@ -87,8 +87,8 @@ const verifyLogin = async (req, res) => {
 
 const loadDashboard = async (req, res) => {
   try {
-    const userData = await User.findById({ _id: req.session.user_id });
-    res.render("adminDash", { admin: userData });
+    const userData=await User.find({is_admin:0})
+    res.render("adminDash",{Users:userData});
   } catch (error) {
     console.log(error.message);
   }
@@ -177,6 +177,9 @@ const loadProfile = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
 
 module.exports = {
   loadLogin,
