@@ -1,0 +1,23 @@
+<%- include('../layouts/header.ejs') %>
+    <h1>Add New Users</h1>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Enter name" required><br><br>
+        <input type="email" name="email" placeholder="Enter Email" required><br><br>
+        <input type="number" name="mobile" placeholder="Enter Phone" required><br><br>
+        <input type="password" name="password" placeholder="Enter Password" required><br><br>
+        <input type="file" name="image" required><br><br>
+        <input type="submit" value="Add User">
+    </form>
+
+<%
+    if(typeof message !=='undefined'){ 
+        %>
+        <p style="color:red;"><%= message %></p>
+        <% 
+    } 
+%>
+
+<br><br>
+<a href="/admin/adminDash">Back to Home</a>
+ <% include('../layouts/footer.ejs') %>

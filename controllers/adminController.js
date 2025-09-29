@@ -87,8 +87,8 @@ const verifyLogin = async (req, res) => {
 
 const loadDashboard = async (req, res) => {
   try {
-    const userData=await User.find({is_admin:0})
-    res.render("adminDash",{Users:userData});
+    const userData = await User.find({ is_admin: 0 });
+    res.render("adminDash", { Users: userData });
   } catch (error) {
     console.log(error.message);
   }
@@ -178,8 +178,83 @@ const loadProfile = async (req, res) => {
   }
 };
 
+const loadNewUser = async (req, res) => {
+  try {
+    res.render("newUser");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const addUserMail = async (name, email, password, user_id) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    const mailOptions = {
+      from: "22l025@gecskp.ac.in",
+      to: email,
+      subject: "Admin add You and Verify your mail",
+      html:
+        "<p>Hii " +
+        name +
+        ', please click here to <a href="http://127.0.0.1:3005/verify?id=' +
+        user_id +
+        '">Verify</a> your mail.</p> <br><br> <b>Email:-</b>' +
+        email +
+        "<br><b>Password:-</b>" +
+        password +
+        "",
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email has been send:- ", info.response);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
+const addUser = async (req, res) => {
+  try {
+    const { name, email, mobile, password } = req.body;
 
+    if (!password) {
+      return res.render("newUser", { message: "Password is required" });
+    }
+
+    const spassword = await securePassword(password);
+
+    const user = new User({
+      name,
+      email,
+      mobile,
+      password: spassword,
+      image: req.file?.filename || "", // handle if file not uploaded
+      is_admin: 0,
+    });
+
+    const userData = await user.save();
+    if (userData) {
+      addUserMail(name, email, password, userData._id);
+      res.redirect("/admin/adminDash");
+    } else {
+      res.render("newUser", { message: "Something went wrong" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.render("newUser", { message: "Error: " + err.message });
+  }
+};
 
 module.exports = {
   loadLogin,
@@ -192,4 +267,6 @@ module.exports = {
   forgetPasswordLoad,
   resetPassword,
   loadProfile,
+  loadNewUser,
+  addUser,
 };
