@@ -1,18 +1,211 @@
-<% include('../layouts/header.ejs') %>
-    <h1>Verification</h1>
+<%- include('../layouts/header.ejs') %>
 
-    <% if(typeof message !=='undefined' ){ %>
-        <h3>
-            <%=message %>
-        </h3>
-        <% } %>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center py-5">
+            <div class="col-lg-5 col-md-7">
+                <!-- Verification Card -->
+                <div class="card shadow-lg border-0">
+                    <div class="card-header text-white text-center py-4"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="mb-3">
+                            <i class="fas fa-envelope-open-text fa-3x"></i>
+                        </div>
+                        <h2 class="mb-0">Email Verification</h2>
+                        <p class="mb-0 mt-2">Verify your account to continue</p>
+                    </div>
+                    <div class="card-body p-5">
+                        <!-- Info Box -->
+                        <div class="alert alert-info border-0 mb-4" role="alert">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>How it works:</strong> Enter your email address and we'll send you a verification
+                            link to activate your account.
+                        </div>
 
-            <form action="/forget" method="post">
-                <input type="email" name="email" placeholder="Enter email" required>
-                <br><br>
+                        <!-- Message Alert -->
+                        <% if(typeof message !=='undefined' ){ %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Notice!</strong>
+                                <%= message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                            <% } %>
 
-                <input type="submit" value="Send Verification Link">
-            </form>
+                                <form action="/forget" method="post">
+                                    <!-- Email Field -->
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label fw-bold">
+                                            <i class="fas fa-envelope text-primary"></i> Email Address
+                                        </label>
+                                        <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                            placeholder="Enter your registered email" required>
+                                        <div class="form-text">
+                                            <i class="fas fa-lightbulb"></i> Make sure to use the email you registered
+                                            with
+                                        </div>
+                                    </div>
 
+                                    <!-- Submit Button -->
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-lg text-white"
+                                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                            <i class="fas fa-paper-plane"></i> Send Verification Link
+                                        </button>
+                                    </div>
+                                </form>
 
-            <% include('../layouts/footer.ejs') %>
+                                <!-- Additional Information -->
+                                <div class="mt-4 p-3 bg-light rounded">
+                                    <h6 class="fw-bold mb-2">
+                                        <i class="fas fa-clock text-warning"></i> What happens next?
+                                    </h6>
+                                    <ul class="small mb-0 ps-3">
+                                        <li>Check your email inbox (and spam folder)</li>
+                                        <li>Click the verification link in the email</li>
+                                        <li>Your account will be activated instantly</li>
+                                        <li>You can then login to your account</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Links Section -->
+                                <div class="text-center mt-4">
+                                    <hr>
+                                    <p class="text-muted mb-3">Need something else?</p>
+                                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                        <a href="/login" class="btn btn-outline-primary">
+                                            <i class="fas fa-sign-in-alt"></i> Back to Login
+                                        </a>
+                                        <a href="/register" class="btn btn-outline-success">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+
+                <!-- Help Section -->
+                <div class="card shadow-sm mt-3 border-0">
+                    <div class="card-body text-center py-3">
+                        <p class="mb-0 text-muted">
+                            <i class="fas fa-question-circle"></i> Didn't receive the email?
+                            <a href="#" class="text-decoration-none fw-bold"
+                                onclick="alert('Please check your spam folder or try again in a few minutes.'); return false;">
+                                Get Help
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Footer Text -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        <i class="fas fa-shield-alt"></i> Secure verification process - Your email is safe with us
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add FontAwesome for icons if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            border: none;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-label {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            border-radius: 10px;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+        }
+
+        a {
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: #764ba2;
+        }
+
+        hr {
+            opacity: 0.1;
+        }
+
+        .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        .btn-outline-success:hover {
+            transform: translateY(-2px);
+        }
+
+        .bg-light {
+            background-color: #f8f9fa !important;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0 !important;
+        }
+
+        ul li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+    </style>
+
+    <%- include('../layouts/footer.ejs') %>

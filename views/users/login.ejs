@@ -1,23 +1,200 @@
-<% include('../layouts/header.ejs') %>
-    <h1>Login</h1>
+<%- include('../layouts/header.ejs') %>
 
-    <% 
-    if(typeof message !=='undefined' ){
-         %>
-        <h3>
-            <%=message %>
-        </h3>
-        <% }
-     %>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center py-5">
+            <div class="col-lg-5 col-md-7">
+                <!-- Login Card -->
+                <div class="card shadow-lg border-0">
+                    <div class="card-header text-white text-center py-4"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h2 class="mb-0">
+                            <i class="fas fa-sign-in-alt"></i> Welcome Back
+                        </h2>
+                        <p class="mb-0 mt-2">Login to your account</p>
+                    </div>
+                    <div class="card-body p-5">
+                        <!-- Error/Info Message -->
+                        <% if(typeof message !=='undefined' ){ %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Notice!</strong>
+                                <%= message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                            <% } %>
 
-            <form action="/login" method="post">
-                <input type="email" name="email" placeholder="Enter email" required>
-                <br><br>
-                <input type="password" name="password" placeholder="Enter password" required>
-                <br><br>
-                <input type="submit" value="Login">
-            </form>
-            <a href="/forget">Forgot Password</a>
-            <a href="/verification">Verification</a>
+                                <form action="/login" method="post">
+                                    <!-- Email Field -->
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label fw-bold">
+                                            <i class="fas fa-envelope text-primary"></i> Email Address
+                                        </label>
+                                        <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                            placeholder="Enter your email" required>
+                                    </div>
 
-            <% include('../layouts/footer.ejs') %>
+                                    <!-- Password Field -->
+                                    <div class="mb-4">
+                                        <label for="password" class="form-label fw-bold">
+                                            <i class="fas fa-lock text-primary"></i> Password
+                                        </label>
+                                        <div class="input-group input-group-lg">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="Enter your password" required>
+                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                <i class="fas fa-eye" id="toggleIcon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Remember Me & Forgot Password -->
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        <a href="/forget" class="text-decoration-none">
+                                            <i class="fas fa-key"></i> Forgot Password?
+                                        </a>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-lg text-white"
+                                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                            <i class="fas fa-sign-in-alt"></i> Login
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <!-- Additional Links -->
+                                <div class="text-center mt-4">
+                                    <hr>
+                                    <p class="text-muted mb-3">Need help with your account?</p>
+                                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                        <a href="/verification" class="btn btn-outline-primary">
+                                            <i class="fas fa-check-circle"></i> Verify Account
+                                        </a>
+                                        <a href="/register" class="btn btn-outline-success">
+                                            <i class="fas fa-user-plus"></i> Create Account
+                                        </a>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+
+                <!-- Footer Text -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        <i class="fas fa-shield-alt"></i> Secure Login - Your data is protected
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add FontAwesome for icons if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            border: none;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-label {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+        }
+
+        .input-group-lg>.btn {
+            padding: 0.5rem 1rem;
+        }
+
+        a {
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: #764ba2;
+        }
+
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        hr {
+            opacity: 0.1;
+        }
+
+        .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+
+        .btn-outline-success:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <script>
+        // Toggle Password Visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+    </script>
+
+    <%- include('../layouts/footer.ejs') %>

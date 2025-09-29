@@ -1,13 +1,213 @@
-<% include('../layouts/header.ejs') %>
-    <img src="/userImages/<%= user.image %>" width="100px" height="100px" alt="<%= user.image %>">
-    <form action="" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image"><br><br>
-        <input type="hidden" name="user_id" value="<%= user._id%>">
-        <input type="text" name="name" value="<%= user.name %>" placeholder="Enter Name" required>
-        <br><br>
-        <input type="email" name="email" value="<%= user.email %>" placeholder="Enter Email" required>
-        <br><br>
-        <input type="text" name="mobile" value="<%= user.mobile %>" placeholder="Enter Mobile" required>
-        <input type="submit" value="Update Profile">
-    </form>
-    <% include('../layouts/footer.ejs') %>
+<%- include('../layouts/header.ejs') %>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="min-height: 100vh;">
+                <div class="position-sticky pt-3">
+                    <h4 class="text-white text-center mb-4">
+                        <i class="fas fa-user-circle"></i> User Portal
+                    </h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/home">
+                                <i class="fas fa-home"></i> My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white active bg-primary" href="/edit?id=<%=user._id%>">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item mt-auto">
+                            <a class="nav-link text-danger" href="/logout">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </h1>
+
+                </div>
+
+                <!-- Edit Profile Form -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-edit"></i> Update Profile Information</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <!-- Current Profile Image -->
+                                <div class="text-center mb-4">
+                                    <div class="position-relative d-inline-block">
+                                        <img src="/userImages/<%= user.image %>"
+                                            class="rounded-circle border border-3 border-primary shadow" width="120"
+                                            height="120" alt="<%= user.image %>" id="currentImage"
+                                            style="object-fit: cover;">
+                                        <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2">
+                                            <i class="fas fa-camera text-white"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-muted mt-2 mb-0">Current Profile Picture</p>
+                                </div>
+
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="user_id" value="<%= user._id%>">
+
+                                    <!-- Profile Image Upload -->
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label fw-bold">
+                                            <i class="fas fa-upload text-primary me-2"></i>Update Profile Picture
+                                        </label>
+                                        <input type="file" class="form-control form-control-lg" id="image" name="image"
+                                            accept="image/*" onchange="previewImage(this)">
+                                        <div class="form-text">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Choose JPG, PNG, or GIF files (Max: 5MB)
+                                        </div>
+                                    </div>
+
+                                    <!-- Name Field -->
+                                    <div class="mb-4">
+                                        <label for="name" class="form-label fw-bold">
+                                            <i class="fas fa-user text-success me-2"></i>Full Name
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="name" name="name"
+                                            value="<%= user.name %>" placeholder="Enter your full name" required>
+                                    </div>
+
+                                    <!-- Email Field -->
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label fw-bold">
+                                            <i class="fas fa-envelope text-info me-2"></i>Email Address
+                                        </label>
+                                        <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                            value="<%= user.email %>" placeholder="Enter your email address" required>
+                                    </div>
+
+                                    <!-- Mobile Field -->
+                                    <div class="mb-4">
+                                        <label for="mobile" class="form-label fw-bold">
+                                            <i class="fas fa-mobile-alt text-warning me-2"></i>Mobile Number
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="mobile"
+                                            name="mobile" value="<%= user.mobile %>"
+                                            placeholder="Enter your mobile number" required>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-primary btn-lg">
+                                            <i class="fas fa-save me-2"></i>Update Profile
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add FontAwesome for icons if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .sidebar {
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: rgba(255, 255, 255, .8);
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 8px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            transition: all 0.3s;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            margin-bottom: 8px;
+        }
+
+        #currentImage {
+            transition: transform 0.3s;
+        }
+
+        #currentImage:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('currentImage').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+    <%- include('../layouts/footer.ejs') %>

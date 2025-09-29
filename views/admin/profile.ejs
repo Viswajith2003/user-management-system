@@ -1,24 +1,236 @@
-<% include("../layouts/header.ejs")%>
+<%- include("../layouts/header.ejs") %>
 
-    <h1>My Profile</h1>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="min-height: 100vh;">
+            <div class="position-sticky pt-3">
+                <h4 class="text-white text-center mb-4">
+                    <i class="fas fa-user-shield"></i> Admin Panel
+                </h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white active bg-primary" href="/admin/profile">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/new-user">
+                            <i class="fas fa-user-plus"></i> Add New User
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/adminDash">
+                            <i class="fas fa-users"></i> Users List
+                        </a>
+                    </li>
+                    <li class="nav-item mt-auto">
+                        <a class="nav-link text-danger" href="/admin/logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <table style="width: 50%;">
-        <tr>
-            <td><img src="/userImages/<%= admin.image %>" width="100px" height="150px"></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>
-                <%= admin.email %>
-            </td>
-        </tr>
-        <tr>
-            <td>Mobile</td>
-            <td>
-                <%= admin.mobile %>
-            </td>
-        </tr>
-    </table>
-    <br><br>    
-    <a href="/admin/adminDash">Back to Home</a>
-    <% include("../layouts/footer.ejs")%>
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">
+                    <i class="fas fa-id-card"></i> My Profile
+                </h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <a href="/admin/adminDash" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-header bg-gradient text-white text-center py-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <h4 class="mb-0">
+                                <i class="fas fa-user-circle"></i> Admin Profile
+                            </h4>
+                        </div>
+                        <div class="card-body p-5">
+                            <div class="row">
+                                <!-- Profile Image Section -->
+                                <div class="col-md-4 text-center mb-4 mb-md-0">
+                                    <div class="profile-image-wrapper">
+                                        <img src="/userImages/<%= admin.image %>" 
+                                             class="img-fluid rounded-circle shadow-lg" 
+                                             alt="Admin Profile"
+                                             style="width: 200px; height: 200px; object-fit: cover; border: 5px solid #667eea;">
+                                    </div>
+                                    <div class="mt-3">
+                                        <span class="badge bg-success fs-6">
+                                            <i class="fas fa-check-circle"></i> Admin
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Profile Details Section -->
+                                <div class="col-md-8">
+                                    <h3 class="mb-4 text-primary">
+                                        <i class="fas fa-info-circle"></i> Profile Information
+                                    </h3>
+                                    
+                                    <!-- Email -->
+                                    <div class="mb-4 p-3 bg-light rounded">
+                                        <div class="row align-items-center">
+                                            <div class="col-4">
+                                                <h6 class="mb-0 text-muted">
+                                                    <i class="fas fa-envelope text-primary"></i> Email
+                                                </h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="mb-0 fw-bold fs-5"><%= admin.email %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mobile -->
+                                    <div class="mb-4 p-3 bg-light rounded">
+                                        <div class="row align-items-center">
+                                            <div class="col-4">
+                                                <h6 class="mb-0 text-muted">
+                                                    <i class="fas fa-phone text-success"></i> Mobile
+                                                </h6>
+                                            </div>
+                                            <div class="col-8">
+                                                <p class="mb-0 fw-bold fs-5"><%= admin.mobile %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <!-- <div class="mt-4">
+                                        <a href="/admin/edit-profile" class="btn btn-primary btn-lg me-2">
+                                            <i class="fas fa-edit"></i> Edit Profile
+                                        </a>
+                                        <a href="/admin/change-password" class="btn btn-outline-secondary btn-lg">
+                                            <i class="fas fa-key"></i> Change Password
+                                        </a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info Card -->
+                    <div class="card shadow-sm mt-4 border-0">
+                        <div class="card-body text-center py-4">
+                            <a href="/admin/adminDash" class="btn btn-link text-decoration-none fs-5">
+                                <i class="fas fa-home"></i> Return to Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Add FontAwesome for icons if not already included -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    .sidebar {
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+    
+    .sidebar .nav-link {
+        font-weight: 500;
+        color: rgba(255, 255, 255, .8);
+        padding: 12px 20px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+    
+    .sidebar .nav-link.active {
+        color: white;
+    }
+    
+    .sidebar .nav-link i {
+        margin-right: 8px;
+    }
+    
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .card-header {
+        border: none;
+    }
+    
+    .profile-image-wrapper {
+        position: relative;
+        display: inline-block;
+        animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .bg-light {
+        background-color: #f8f9fa !important;
+        transition: all 0.3s;
+    }
+    
+    .bg-light:hover {
+        background-color: #e9ecef !important;
+        transform: translateX(5px);
+    }
+    
+    .btn {
+        transition: all 0.3s;
+        border-radius: 8px;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .shadow-lg {
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+    
+    .text-primary {
+        color: #667eea !important;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+</style>
+
+<%- include("../layouts/footer.ejs") %>

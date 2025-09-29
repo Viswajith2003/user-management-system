@@ -1,21 +1,219 @@
 <%- include('../layouts/header.ejs') %>
-    <h1>User Registration Form</h1>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Enter name" required><br><br>
-        <input type="email" name="email" placeholder="Enter Email" required><br><br>
-        <input type="text" name="mobile" placeholder="Enter Phone" required><br><br>
-        <input type="file" name="image" required><br><br>
-        <input type="password" name="password" placeholder="Enter Password" required><br><br>
-        <input type="submit" value="Register">
-    </form>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center py-5">
+            <div class="col-lg-6 col-md-8">
+                <!-- Registration Card -->
+                <div class="card shadow-lg border-0">
+                    <div class="card-header text-white text-center py-4"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h2 class="mb-0">
+                            <i class="fas fa-user-plus"></i> User Registration
+                        </h2>
+                        <p class="mb-0 mt-2">Create your account to get started</p>
+                    </div>
+                    <div class="card-body p-5">
+                        <!-- Success Message -->
+                        <% if(typeof message !=='undefined' ){ %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle"></i>
+                                <strong>Success!</strong>
+                                <%= message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                            <% } %>
 
-<%
-    if(typeof message !=='undefined'){ 
-        %>
-        <p style="color:green;"><%= message %></p>
-        <% 
-    } 
-%>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <!-- Name Field -->
+                                    <div class="mb-4">
+                                        <label for="name" class="form-label fw-bold">
+                                            <i class="fas fa-user text-primary"></i> Full Name
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="name" name="name"
+                                            placeholder="Enter your full name" required>
+                                    </div>
 
- <% include('../layouts/footer.ejs') %>
+                                    <!-- Email Field -->
+                                    <div class="mb-4">
+                                        <label for="email" class="form-label fw-bold">
+                                            <i class="fas fa-envelope text-primary"></i> Email Address
+                                        </label>
+                                        <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                            placeholder="Enter your email" required>
+                                    </div>
+
+                                    <!-- Mobile Field -->
+                                    <div class="mb-4">
+                                        <label for="mobile" class="form-label fw-bold">
+                                            <i class="fas fa-phone text-primary"></i> Mobile Number
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="mobile"
+                                            name="mobile" placeholder="Enter your phone number" required>
+                                    </div>
+
+                                    <!-- Image Upload Field -->
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label fw-bold">
+                                            <i class="fas fa-camera text-primary"></i> Profile Picture
+                                        </label>
+                                        <input type="file" class="form-control form-control-lg" id="image" name="image"
+                                            accept="image/*" required>
+                                        <div class="form-text">Upload a clear photo of yourself</div>
+                                    </div>
+
+                                    <!-- Image Preview -->
+                                    <div class="mb-4" id="imagePreviewContainer" style="display: none;">
+                                        <label class="form-label fw-bold">
+                                            <i class="fas fa-eye text-primary"></i> Preview
+                                        </label>
+                                        <div class="text-center p-3 border rounded bg-light">
+                                            <img id="imagePreview" src="" alt="Preview"
+                                                class="img-thumbnail rounded-circle"
+                                                style="width: 150px; height: 150px; object-fit: cover;">
+                                        </div>
+                                    </div>
+
+                                    <!-- Password Field -->
+                                    <div class="mb-4">
+                                        <label for="password" class="form-label fw-bold">
+                                            <i class="fas fa-lock text-primary"></i> Password
+                                        </label>
+                                        <div class="input-group input-group-lg">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="Create a strong password" required>
+                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                <i class="fas fa-eye" id="toggleIcon"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">Password must be at least 8 characters long</div>
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <div class="d-grid gap-2 mt-4">
+                                        <button type="submit" class="btn btn-lg text-white"
+                                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                            <i class="fas fa-user-plus"></i> Register Now
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <!-- Login Link -->
+                                <div class="text-center mt-4">
+                                    <p class="text-muted">Already have an account?
+                                        <a href="/login" class="text-decoration-none fw-bold">
+                                            Login here
+                                        </a>
+                                    </p>
+                                </div>
+                    </div>
+                </div>
+
+                <!-- Footer Text -->
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        <i class="fas fa-shield-alt"></i> Your information is secure with us
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add FontAwesome for icons if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            border: none;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+        }
+
+        .btn {
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .form-label {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+
+        .shadow-lg {
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+        }
+
+        .input-group-lg>.btn {
+            padding: 0.5rem 1rem;
+        }
+
+        a {
+            color: #667eea;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: #764ba2;
+        }
+    </style>
+
+    <script>
+        // Image Preview Functionality
+        document.getElementById('image').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Toggle Password Visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        });
+    </script>
+
+    <%- include('../layouts/footer.ejs') %>

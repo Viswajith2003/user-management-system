@@ -1,23 +1,248 @@
 <%- include('../layouts/header.ejs') %>
-    <h1>Add New Users</h1>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="text" name="name" placeholder="Enter name" required><br><br>
-        <input type="email" name="email" placeholder="Enter Email" required><br><br>
-        <input type="number" name="mobile" placeholder="Enter Phone" required><br><br>
-        <input type="password" name="password" placeholder="Enter Password" required><br><br>
-        <input type="file" name="image" required><br><br>
-        <input type="submit" value="Add User">
-    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="min-height: 100vh;">
+                <div class="position-sticky pt-3">
+                    <h4 class="text-white text-center mb-4">
+                        <i class="fas fa-user-shield"></i> Admin Panel
+                    </h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/admin/dashboard">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/admin/profile">
+                                <i class="fas fa-user"></i> My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white active bg-primary" href="/admin/new-user">
+                                <i class="fas fa-user-plus"></i> Add New User
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/admin/adminDash">
+                                <i class="fas fa-users"></i> Users List
+                            </a>
+                        </li>
+                        <li class="nav-item mt-auto">
+                            <a class="nav-link text-danger" href="/admin/logout">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-<%
-    if(typeof message !=='undefined'){ 
-        %>
-        <p style="color:red;"><%= message %></p>
-        <% 
-    } 
-%>
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">
+                        <i class="fas fa-user-plus"></i> Add New User
+                    </h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/adminDash" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
 
-<br><br>
-<a href="/admin/adminDash">Back to Home</a>
- <% include('../layouts/footer.ejs') %>
+                <!-- Add User Form -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <!-- Error/Success Message -->
+                        <% if(typeof message !=='undefined' ){ %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>Error!</strong>
+                                <%= message %>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                            <% } %>
+
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="fas fa-user-plus"></i> Create New User Account</h5>
+                                    </div>
+                                    <div class="card-body p-4">
+                                        <form action="" method="post" enctype="multipart/form-data">
+                                            <!-- Name Field -->
+                                            <div class="mb-4">
+                                                <label for="name" class="form-label fw-bold">
+                                                    <i class="fas fa-user"></i> Full Name
+                                                </label>
+                                                <input type="text" class="form-control form-control-lg" id="name"
+                                                    name="name" placeholder="Enter name" required>
+                                                <div class="form-text">Enter the user's full name</div>
+                                            </div>
+
+                                            <!-- Email Field -->
+                                            <div class="mb-4">
+                                                <label for="email" class="form-label fw-bold">
+                                                    <i class="fas fa-envelope"></i> Email Address
+                                                </label>
+                                                <input type="email" class="form-control form-control-lg" id="email"
+                                                    name="email" placeholder="Enter Email" required>
+                                                <div class="form-text">We'll never share this email with anyone else
+                                                </div>
+                                            </div>
+
+                                            <!-- Mobile Field -->
+                                            <div class="mb-4">
+                                                <label for="mobile" class="form-label fw-bold">
+                                                    <i class="fas fa-phone"></i> Mobile Number
+                                                </label>
+                                                <input type="number" class="form-control form-control-lg" id="mobile"
+                                                    name="mobile" placeholder="Enter Phone" required>
+                                                <div class="form-text">Enter a valid mobile number</div>
+                                            </div>
+
+                                            <!-- Password Field -->
+                                            <div class="mb-4">
+                                                <label for="password" class="form-label fw-bold">
+                                                    <i class="fas fa-lock"></i> Password
+                                                </label>
+                                                <input type="password" class="form-control form-control-lg"
+                                                    id="password" name="password" placeholder="Enter Password" required>
+                                                <div class="form-text">Password should be at least 8 characters</div>
+                                            </div>
+
+                                            <!-- Image Upload Field -->
+                                            <div class="mb-4">
+                                                <label for="image" class="form-label fw-bold">
+                                                    <i class="fas fa-image"></i> Profile Image
+                                                </label>
+                                                <input type="file" class="form-control form-control-lg" id="image"
+                                                    name="image" accept="image/*" required>
+                                                <div class="form-text">Upload a profile picture (JPG, PNG, or GIF)</div>
+                                            </div>
+
+                                            <!-- Image Preview -->
+                                            <div class="mb-4" id="imagePreviewContainer" style="display: none;">
+                                                <label class="form-label fw-bold">
+                                                    <i class="fas fa-eye"></i> Image Preview
+                                                </label>
+                                                <div class="text-center p-3 border rounded bg-light">
+                                                    <img id="imagePreview" src="" alt="Preview" class="img-thumbnail"
+                                                        style="max-width: 200px; max-height: 200px;">
+                                                </div>
+                                            </div>
+
+                                            <!-- Submit Button -->
+                                            <div class="d-grid gap-2">
+                                                <button type="submit" class="btn btn-primary btn-lg">
+                                                    <i class="fas fa-user-plus"></i> Add User
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Back Link Card -->
+                                <div class="text-center mt-3">
+                                    <a href="/admin/adminDash" class="btn btn-link text-decoration-none">
+                                        <i class="fas fa-arrow-left"></i> Cancel and Go Back
+                                    </a>
+                                </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add FontAwesome for icons if not already included -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .sidebar {
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: rgba(255, 255, 255, .8);
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar .nav-link.active {
+            color: white;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 8px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn {
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-label {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+
+        #imagePreview {
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+
+    <script>
+        // Image Preview Functionality
+        document.getElementById('image').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+    <%- include('../layouts/footer.ejs') %>
