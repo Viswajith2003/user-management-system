@@ -60,6 +60,12 @@ admin_route.get("/profile", adminAuth.isLogin, adminController.loadProfile);
 admin_route.get("/newUser", adminAuth.isLogin, adminController.loadNewUser);
 admin_route.post("/newUser", upload.single("image"), adminController.addUser);
 
+admin_route.get("/editUser", adminAuth.isLogin, adminController.loadEditUser);
+admin_route.post("/editUser", adminController.updateUser);
+admin_route.get("/deleteUser",adminAuth.isLogin,adminController.DeleteUser)
+
+
+
 // Catch-all route (404 handler or redirect)
 admin_route.use((req, res) => {
   res.redirect("/admin");

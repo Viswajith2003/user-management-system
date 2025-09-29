@@ -15,6 +15,7 @@
                 <th>Phone</th>
                 <th>Image</th>
                 <th>Verified</th>
+                <th>Action</th>
             </tr>
 
             <% if(Users.length> 0){
@@ -32,18 +33,17 @@
                         <td><img src="/userImages/<%= Users[i].image%>" alt="><%= Users[i].image%>" width="100px"
                                 height="100px"></td>
                         <td>
-                            <%
-                                if(Users[i].is_verified === 0)
-                                {
-                                    %>
-                                        <p>Not Verified</p>
-                                    <%
-                                }else{
-                                    %>
-                                        <p>Verified</p>
-                                    <%
-                                }
-                            %>
+                            <% if(Users[i].is_verified===0) { %>
+                                <p>Not Verified</p>
+                                <% }else{ %>
+                                    <p>Verified</p>
+                                    <% } %>
+                        </td>
+                        <!-- ?id is a query parameter which is used to pass the id of the user to be edited to the editUser route -->
+                        <td>
+                            <a href="/admin/editUser?id=<%= Users[i]._id%>">Edit</a> <br><br>
+                            <a href="/admin/deleteUser?id=<%= Users[i]._id%>">Delete</a>
+
                         </td>
                     </tr>
                     <% } }else{ %>

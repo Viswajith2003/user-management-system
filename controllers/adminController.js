@@ -256,6 +256,50 @@ const addUser = async (req, res) => {
   }
 };
 
+const loadEditUser = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const userData = await User.findById({ _id: id });
+    if (userData) {
+      res.render("editUser", { user: userData });
+    } else {
+      res.redirect("/admin/adminDash");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+const updateUser = async (req, res) => {
+  const { name, email, mobile, verify } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.body.id,
+      { name, email, mobile, is_verified: verify === "1" ? 1 : 0 },
+      { new: true }
+    );
+    if (updatedUser) {
+      res.redirect("/admin/adminDash");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Something went wrong");
+  }
+};
+
+const DeleteUser = async (req, res) => {
+  try {
+    const id = req.query.id;
+    const deleteUser = await User.deleteOne({ _id:id });
+    if (deleteUser) {
+      res.redirect("/admin/adminDash");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   loadLogin,
   verifyLogin,
@@ -269,4 +313,7 @@ module.exports = {
   loadProfile,
   loadNewUser,
   addUser,
+  loadEditUser,
+  updateUser,
+  DeleteUser,
 };
